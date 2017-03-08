@@ -56,8 +56,21 @@ class App extends Component {
   }
 
   handleUserChange = (event) => {
-    if(event.key == 'Enter' && event.target.value.length > 0){
-      const newNotification = {type: 'postNotification', oldName: this.state.currentUser.name, newName: event.target.value}
+    if(event.key == 'Enter'){
+      let newName = '';
+      let oldName = '';
+      if(!event.target.value){
+        console.log('lul')
+        newName = 'Anonymous';
+      }else{
+        newName = event.target.value;
+      }
+      if(!this.state.currentUser.name){
+        oldName = 'Anonymous';
+      }else{
+        oldName = this.state.currentUser.name;
+      }
+      const newNotification = {type: 'postNotification', oldName: oldName, newName: newName}
       this.socket.send(JSON.stringify(newNotification));
       this.setState({currentUser: {name: event.target.value}})
     }

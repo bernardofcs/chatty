@@ -91,7 +91,7 @@ function handlePost(data){
       wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
           data.type = 'incomingMessage';
-          // data.color = clients[data.userId].color;
+          data.color = clients[data.userId].color;
           data.clientColor = clients[data.userId].color
           client.send(JSON.stringify(data));
         }
