@@ -34,7 +34,7 @@ class App extends Component {
         this.setState({oldName: data.oldName, newName: data.newName})
         break;
       case 'incomingConnection':
-        this.setState({connectedUsers: data.clientsConnected, currentUser: {name: 'Bob'}});
+        this.setState({connectedUsers: data.clientsConnected, currentUser: {name: 'Anonymous'}});
         break;
       case 'incomingDisconnection':
         this.setState({connectedUsers: data.clientsConnected});
@@ -44,7 +44,6 @@ class App extends Component {
     }
     }
   }
-
 
 
   handleSubmit = (event) => {

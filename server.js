@@ -42,7 +42,6 @@ let clients = {}
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   const clientId = uuid();
-  console.log('clientId when connected: ' + clientId);
   clientConnected(ws, clientId)
   ws.on('message', handlePost)
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
@@ -112,8 +111,8 @@ function handlePost(data){
 }
 
 function randomColor() {
-  const colors = ['#2e589b', '#c40707', '#7c8c13', '#2fe372']
-  return colors[Math.round(Math.random() * 3)]
+  const colors = ['#2e589b', '#c40707', '#7c8c13', '#2fe372', '#cc0000', '#003300', '#993333', '#6600ff']
+  return colors[Math.round(Math.random() * 7)]
 }
 
 

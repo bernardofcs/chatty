@@ -20,6 +20,11 @@ body {
       right: 0;
     }
 
+    .image {
+      max-height: 400px;
+      max-width: 400px;
+    }
+
     .chatbar-message,
     .chatbar-username {
       border: 1px solid black;
