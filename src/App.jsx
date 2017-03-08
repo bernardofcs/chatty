@@ -9,7 +9,8 @@ class App extends Component {
     this.state =
     {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      connectedUsers: 0
     };
   }
 
@@ -28,6 +29,12 @@ class App extends Component {
         break;
       case 'incomingNotification':
         this.setState({oldName: data.name})
+        break;
+      case 'incomingConnection':
+        this.setState({connectedUsers: data.clientsConnected});
+        break;
+      case 'incomingDisconnection':
+        this.setState({connectedUsers: data.clientsConnected});
         break;
       default:
         throw new Error("Unknown event type " + data.type);
@@ -60,7 +67,7 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar">
-          <a href="/" className="navbar-brand">Chatty</a>
+          <a href="/" className="navbar-brand">Chatty</a><div className="navbar-users">{this.state.connectedUsers} users connected</div>
         </nav>
         <MessageList currentUser={this.state.currentUser} oldName={this.state.oldName} messages={this.state.messages}/>
         <ChatBar handleSubmit={this.handleSubmit} handleUserChange={this.handleUserChange} currentUser={this.state.currentUser} />
