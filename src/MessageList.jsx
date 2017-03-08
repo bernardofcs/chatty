@@ -11,13 +11,13 @@ class MessageList extends Component {
         {
           this.props.messages.map((message) => {
             return(
-              <Message username={message.username} content={message.content} key={message.id}/>
+              <Message username={message.username} color={message.clientColor} content={message.content} key={message.id}/>
             )
           })
         }
         {this.props.oldName &&
         <div className="message system">
-           {this.props.oldName} changed their name to {this.props.currentUser.name}
+           {this.props.oldName} changed their name to {this.props.newName}
         </div>
       }
       </main>

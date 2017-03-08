@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state =
     {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       connectedUsers: 0
     };
@@ -18,20 +18,23 @@ class App extends Component {
     console.log("componentDidMount <App />");
     const chattySocket = new WebSocket("ws://localhost:4000");
     this.socket = chattySocket;
-    console.log(this.state.messages)
     this.socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       switch(data.type){
+      case 'ownConnection':
+        console.log(data)
+        this.setState({userId: data.userId})
+        break;
       case 'incomingMessage':
         delete data.type;
         const newMsgArr = this.state.messages.concat(data);
         this.setState({messages: newMsgArr});
         break;
       case 'incomingNotification':
-        this.setState({oldName: data.name})
+        this.setState({oldName: data.oldName, newName: data.newName})
         break;
       case 'incomingConnection':
-        this.setState({connectedUsers: data.clientsConnected});
+        this.setState({connectedUsers: data.clientsConnected, currentUser: {name: 'Bob'}});
         break;
       case 'incomingDisconnection':
         this.setState({connectedUsers: data.clientsConnected});
@@ -47,7 +50,7 @@ class App extends Component {
   handleSubmit = (event) => {
     // this.setState({userInput: event.target.value})
     if (event.key == 'Enter' && event.target.value.length > 0){
-      const newMessage = {type: 'postMessage', id: uuid.v1(), username: this.state.currentUser.name, content: event.target.value};
+      const newMessage = {type: 'postMessage', userId: this.state.userId, id: uuid.v1(), username: this.state.currentUser.name, content: event.target.value};
       this.socket.send(JSON.stringify(newMessage));
       event.target.value = "";
     }
@@ -55,7 +58,7 @@ class App extends Component {
 
   handleUserChange = (event) => {
     if(event.key == 'Enter' && event.target.value.length > 0){
-      const newNotification = {type: 'postNotification', name: this.state.currentUser.name}
+      const newNotification = {type: 'postNotification', oldName: this.state.currentUser.name, newName: event.target.value}
       this.socket.send(JSON.stringify(newNotification));
       this.setState({currentUser: {name: event.target.value}})
     }
@@ -69,7 +72,7 @@ class App extends Component {
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a><div className="navbar-users">{this.state.connectedUsers} users connected</div>
         </nav>
-        <MessageList currentUser={this.state.currentUser} oldName={this.state.oldName} messages={this.state.messages}/>
+        <MessageList userColor={this.state.userColor} currentUser={this.state.currentUser} oldName={this.state.oldName} newName={this.state.newName} messages={this.state.messages}/>
         <ChatBar handleSubmit={this.handleSubmit} handleUserChange={this.handleUserChange} currentUser={this.state.currentUser} />
       </div>
     );
