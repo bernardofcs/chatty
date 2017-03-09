@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
+    // console.log("componentDidMount <App />");
     const chattySocket = new WebSocket("ws://localhost:4000");
     this.socket = chattySocket;
     this.socket.onmessage = (event) => {
@@ -82,7 +82,7 @@ class App extends Component {
 
 
   render() {
-    console.log('Rendering <App />');
+    // console.log('Rendering <App />');
     return (
       <div>
         <nav className="navbar">
