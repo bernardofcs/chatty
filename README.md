@@ -13,6 +13,12 @@ npm start
 open http://localhost:3000
 ```
 
+Open multiple tabs/browsers to simulate multiple clients.
+
+###Images
+
+You can either paste a valid image url as a message or drag and drop an image from your local machine.
+
 ### Dependencies
 
 * React
