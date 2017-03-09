@@ -22,7 +22,6 @@ class App extends Component {
       const data = JSON.parse(event.data);
       switch(data.type){
       case 'ownConnection':
-        console.log(data)
         this.setState({userId: data.userId})
         break;
       case 'incomingMessage':
@@ -60,7 +59,6 @@ class App extends Component {
       let newName = '';
       let oldName = '';
       if(!event.target.value){
-        console.log('lul')
         newName = 'Anonymous';
       }else{
         newName = event.target.value;
@@ -76,6 +74,12 @@ class App extends Component {
     }
   }
 
+  onDrop = (acceptedFiles) => {
+    // console.log(acceptedFiles[0])
+      const newPicture = {type: 'postMessage', userId: this.state.userId, id: uuid.v1(), username: this.state.currentUser.name, content: acceptedFiles[0].preview};
+      this.socket.send(JSON.stringify(newPicture));
+    }
+
 
   render() {
     console.log('Rendering <App />');
@@ -85,7 +89,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a><div className="navbar-users">{this.state.connectedUsers} users connected</div>
         </nav>
         <MessageList userColor={this.state.userColor} currentUser={this.state.currentUser} oldName={this.state.oldName} newName={this.state.newName} messages={this.state.messages}/>
-        <ChatBar handleSubmit={this.handleSubmit} handleUserChange={this.handleUserChange} currentUser={this.state.currentUser} />
+        <ChatBar onDrop={this.onDrop} handleSubmit={this.handleSubmit} handleUserChange={this.handleUserChange} currentUser={this.state.currentUser} />
       </div>
     );
   }

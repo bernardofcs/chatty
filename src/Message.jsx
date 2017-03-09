@@ -6,8 +6,13 @@ class Message extends Component {
     return (
         <div className="message">
           <span style={{color: this.props.color}} className="message-username">{this.props.username}</span>
-          {(isURL(this.props.content) && checkURL(this.props.content)) && <span className="message-content"><img className="image" src={this.props.content}/></span>}
-          {(!isURL(this.props.content) || !checkURL(this.props.content)) && <span className="message-content">{this.props.content}</span>}
+
+          {(isURL(this.props.content) && checkURL(this.props.content) || checkURLBlob(this.props.content))
+          && <span className="message-content"><img className="image" src={this.props.content}/></span>}
+
+          {((!isURL(this.props.content) || !checkURL(this.props.content)) && !checkURLBlob(this.props.content))
+          && <span className="message-content">{this.props.content}</span>}
+
         </div>
     );
   }
@@ -25,6 +30,10 @@ function isURL(str) {
 
 function checkURL(url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
+
+function checkURLBlob(url) {
+    return(url.match("blob:http://") != null);
 }
 
 

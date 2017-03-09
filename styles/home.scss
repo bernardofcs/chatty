@@ -43,6 +43,25 @@ body {
       flex: 2;
     }
 
+    .dropzone {
+      height: 40px;
+      color: snow;
+      line-height: 40px;
+      border: 1px solid snow;
+      padding: 0 9px;
+      margin: 5px;
+    }
+
+    .dropzone-active {
+      opacity: 0.5;
+      border: 1px dashed snow;
+    }
+
+    .dropzone:hover {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+
     .message {
       display: flex;
       padding: 5px;

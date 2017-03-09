@@ -51,7 +51,6 @@ wss.on('connection', (ws) => {
 })
 
 function clientConnected(ws, clientId){
-  console.log('Client connected')
   clients[clientId] = {
     id:clientId,
     color: randomColor()
@@ -75,13 +74,12 @@ function clientConnected(ws, clientId){
 }
 
 function clientDisconnected(clientId){
-  console.log('Client disconnected');
-    delete clients[clientId]
-    wss.clients.forEach(function each(client) {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(`{"type":"incomingDisconnection","clientsConnected":${Object.keys(clients).length}}`)
-      }
-    })
+  delete clients[clientId]
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(`{"type":"incomingDisconnection","clientsConnected":${Object.keys(clients).length}}`)
+    }
+  })
 }
 
 function handlePost(data){

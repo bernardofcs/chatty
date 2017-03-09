@@ -47,9 +47,12 @@
   },
   "dependencies": {
     "express": "4.15.2",
+    "file-api": "^0.10.4",
     "node-uuid": "1.4.7",
     "react": "15.2.1",
     "react-dom": "15.2.1",
+    "react-dropzone": "^3.11.0",
+    "webpack": "^1.14.0",
     "ws": "2.2.0"
   }
 }
